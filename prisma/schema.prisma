@@ -4,10 +4,40 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider = "prisma-client-js"  
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgresql" 
+  url      = env("DATABASE_URL")
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  CARD
+  UPI
+  NET_BANKING
+  WALLET
+}
+
+model Payment {
+  id            Int      @id @default(autoincrement())
+  paymentId     String   @unique
+  amount        Decimal  @db.Decimal(10, 2)
+  currency      String   @default("INR")
+  status        PaymentStatus  @default(PENDING)
+  payerName     String
+  payerEmail    String
+  paymentMethod PaymentMethod
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([status])
+  @@index([payerEmail])
 }
