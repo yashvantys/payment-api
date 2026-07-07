@@ -47,6 +47,40 @@ class PaymentController {
             next(error)
         }
     }
+    async updatePayment(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = Number(req.params.id)
+            if (Number.isNaN(id) || id <= 0) {
+                throw new ApiError(400, "Payment id must be a positive number");
+            }
+            const payment = await paymentService.updatePayment(id, req.body)
+            if (!payment) {
+                throw new ApiError(404, "Payment not updated");
+            }
+            return res.status(200).json({
+                success: true,
+                data: payment,
+            });
+        } catch (error) {
+            next(error)
+        }
+    }
+    async deletePayment(req: Request, res: Response, next: NextFunction) {
+        try {
+            const id = Number(req.params.id)
+            if (Number.isNaN(id) || id <= 0) {
+                throw new ApiError(400, "Payment id must be a positive number");
+            }
+            const payment = paymentService.deletePayment(id)
+            return res.status(200).json({
+                success: true,
+                data: payment,
+            });
+        } catch (error) {
+            next(error)
+        }
+
+    }
 }
 
 export default new PaymentController()

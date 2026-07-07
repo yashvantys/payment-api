@@ -17,3 +17,12 @@ export const createPaymentSchema = z.object({
         ]),
     }),
 });
+
+export const updatePaymentSchema = z.object({
+    body: z.object({
+        status:z.enum([
+            "SUCCESS",
+            "FAILED"
+        ])
+    })
+})

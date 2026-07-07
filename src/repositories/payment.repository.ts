@@ -1,3 +1,4 @@
+import { da } from "zod/locales";
 import prisma from "../config/database";
 import { Payment, Prisma } from "@prisma/client";
 
@@ -20,6 +21,16 @@ export class PaymentRepository {
         return prisma.payment.create({
             data,
         });
+    }
+
+    async deletePayment(id: number) {        
+        return prisma.payment.delete({
+            where: { id }
+        })
+    }
+
+    async updatePayment(id: number, data: Prisma.PaymentUpdateInput) {
+        return prisma.payment.update({ where: { id }, data })
     }
 }
 
