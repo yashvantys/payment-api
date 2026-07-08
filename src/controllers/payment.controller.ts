@@ -4,7 +4,7 @@ import { ApiError } from "../utils/ApiError";
 
 class PaymentController {
     async findAll(req: Request, res: Response, next: NextFunction) {
-        try {
+        try {                
             const payments = await paymentService.findAll();
             return res.status(200).json({
                 success: true,
@@ -16,7 +16,7 @@ class PaymentController {
     }
 
     async findById(req: Request, res: Response, next: NextFunction) {
-        try {
+        try {           
             const id = Number(req.params.id)
             if (Number.isNaN(id) || id <= 0) {
                 throw new ApiError(400, "Payment id must be a positive number");

@@ -1,5 +1,6 @@
 import express from "express";
 import paymentRoutes from "./routes/payment.routes";
+import authRoutes from './routes/auth.routes'
 const app = express();
 import { errorHandler } from "./middleware/error.middleware";
 
@@ -7,6 +8,7 @@ import { errorHandler } from "./middleware/error.middleware";
 app.use(express.json());
 
 app.use("/api/v1/payments", paymentRoutes);
+app.use("/api/v1/auth", authRoutes)
 
 
 
