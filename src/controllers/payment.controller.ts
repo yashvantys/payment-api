@@ -4,7 +4,8 @@ import { ApiError } from "../utils/ApiError";
 
 class PaymentController {
     async findAll(req: Request, res: Response, next: NextFunction) {
-        try {                
+        try {   
+            const user = res.locals.user;                       
             const payments = await paymentService.findAll();
             return res.status(200).json({
                 success: true,
