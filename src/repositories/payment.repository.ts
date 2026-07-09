@@ -22,10 +22,17 @@ export class PaymentRepository {
         });
     }
 
-    async deletePayment(id: number) {        
-        return prisma.payment.delete({
-            where: { id }
-        })
+    async deletePayment(id: number) {
+        try {
+            return await prisma.payment.delete({
+                where: { id }
+            });
+        } catch (error: any) {
+            if (error.code === "P2025") {
+                throw new Error("Payment not found");
+            }
+            throw error;
+        }
     }
 
     async updatePayment(id: number, data: Prisma.PaymentUpdateInput) {

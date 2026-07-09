@@ -28,8 +28,7 @@ export const authenticate = (
 
 export const authorize = (...roles: string[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
-        const user = res.locals.user;
-
+        const user = res.locals.user;        
         if (!user) {
             return next(new ApiError(401, "Unauthorized"));
         }

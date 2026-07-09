@@ -72,7 +72,7 @@ class PaymentController {
             if (Number.isNaN(id) || id <= 0) {
                 throw new ApiError(400, "Payment id must be a positive number");
             }
-            const payment = paymentService.deletePayment(id)
+            const payment = await paymentService.deletePayment(id)
             return res.status(200).json({
                 success: true,
                 data: payment,
