@@ -22,3 +22,9 @@ export const loginUserSchema = z.object({
         password: z.string().min(5, "Password is required"),
     }),
 });
+
+export const refershTokenSchema = z.object({
+    body: z.object({
+        refreshToken: z.string("Refresh Token is required"),        
+    }),
+});

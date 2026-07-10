@@ -6,8 +6,12 @@ const options: swaggerJsdoc.Options = {
         info: {
             title: "Payment API",
             version: "1.0.0",
+            description: "RESTful Payment API built with Express, TypeScript, Prisma and PostgreSQL."
         },
-
+        contact: {
+            name: "Yashvant Yadav",
+            email: "yashvant@gmail.com"
+        },
         servers: [
             {
                 url: "http://localhost:3000/api/v1",
@@ -51,8 +55,8 @@ const options: swaggerJsdoc.Options = {
                             example: "Yashvant Yadav",
                         },
                         status: {
-                            type:"string",
-                            enum:["PENDING","SUCCESS","FAILED","REFUNDED"]
+                            type: "string",
+                            enum: ["PENDING", "SUCCESS", "FAILED", "REFUNDED"]
                         },
                         payerEmail: {
                             type: "string",
@@ -82,7 +86,7 @@ const options: swaggerJsdoc.Options = {
 
                 UserRegister: {
                     type: "object",
-                    required: ["firstName","lastName", "email", "password"],
+                    required: ["firstName", "lastName", "email", "password"],
                     properties: {
                         firstName: {
                             type: "string",

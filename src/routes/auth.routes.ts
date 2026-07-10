@@ -1,7 +1,7 @@
 import { Router } from "express";
 import authController from "../controllers/auth.controller";
 import { validate } from "../middleware/validate.middleware";
-import { createUserSchema, loginUserSchema } from "../validations/auth.validator";
+import { createUserSchema, loginUserSchema, refershTokenSchema } from "../validations/auth.validator";
 const router = Router();
 /**
  * @swagger
@@ -40,5 +40,6 @@ router.post("/register", validate(createUserSchema), authController.createUser);
  *         description: Login successful
  */
 router.post("/login", validate(loginUserSchema), authController.login);
+router.post("/refresh", validate(refershTokenSchema), authController.refreshToken);
 
 export default router;
