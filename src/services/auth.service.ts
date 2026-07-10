@@ -2,8 +2,8 @@ import { Prisma } from "@prisma/client";
 import userRepository from "../repositories/user.repository";
 import { comparePassword, hashPassword } from "../utils/password";
 import { ApiError } from "../utils/ApiError";
-import { generateRefreshToken, generateToken } from "../utils/jwt";
-import { urlencoded } from "express";
+import { generateRefreshToken, generateToken, hashToken } from "../utils/jwt";
+import RefreshTokenService from "../services/refresh-token/refreshToken.service"
 class AuthService {
     async createUser(data: Prisma.UserCreateInput) {
         const hashedPassword = await hashPassword(data.password);
@@ -28,14 +28,24 @@ class AuthService {
         });
         const refreshToken = generateRefreshToken(
             {
-                id: user.id,                
+                id: user.id,
             }
         )
+        await RefreshTokenService.storeRefreshToken({
+            refreshToken,
+            userId: user.id,
+            expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        })
+
         return {
             user,
             token,
             refreshToken
         };
+    }
+
+    async logout(refreshToken: string) {
+        await RefreshTokenService.revoke(refreshToken);
     }
 }
 

@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN
@@ -28,4 +29,11 @@ export const verifyToken = (token: string): JwtPayload => {
 
 export const verifyRefereshToken = (token: string): JwtPayload => {
     return jwt.verify(token, JWT_REFRESH_SECRET) as JwtPayload;
+};
+
+export const hashToken = (token: string): string => {
+    return crypto
+        .createHash("sha256")
+        .update(token)
+        .digest("hex");
 };
